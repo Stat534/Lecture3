@@ -98,6 +98,29 @@ if (!inherits(api.exist, "try-error")) {
 }
 ```
 
+## `ggmap` Code Overview
+```{r, eval = F, echo = T}
+ mykey <- read_file('./google_api.txt')
+  register_google(key = mykey)
+  myMap <- get_map(location = c(lon = - 74,lat = 40.75),
+                 source = "google",
+                 maptype = "roadmap", crop = FALSE,
+                 zoom = 11, api_key = mykey)
+
+  ggmap(myMap) + 
+    geom_point(aes(x=Lon, y=Lat), alpha=.03, size=.5, data=uber) + 
+    labs(title = 'Location of Uber pickups on May 1, 2014 for NYC Destinations', 
+    caption = 'source: https://www.kaggle.com/fivethirtyeight/uber-pickups-in-new-york-city') + 
+    xlab('') + ylab('') +
+    theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+```
+
+
 ## Principles for Point Data
 
 1. Include useful background for appropriate context: there are several approaches for acquiring maps in R. Sometimes streets may be more useful, but in other situation a terrain image might be more relevant.
@@ -105,15 +128,24 @@ if (!inherits(api.exist, "try-error")) {
 3. Include useful titles, labels, and where appropriate, captions (*all figures*). These figures should stand alone.
 4. Sources should be cited in figures.
 
-## Another Example
-```{r}
-library(maps)
-map('county', 'washington', fill = F)
+## Cloning a Repo
+Luckily, for all of us, this course will not consist of me talking for 75 minutes. Rather, active learning components will be interspersed within the day. In general, we will spend some time talking about a topic and then I will give you time to work through data visualization or analysis.
+
+To facilitate the active learning sessions, I'd recommend cloning the repo at the start of class. For instance, here is the repo for today [https://github.com/Stat534/Lecture3](https://github.com/Stat534/Lecture3). Using R Studio to create a local project is one way to do this, but you won't have `push` access to my repo.
+
+
+
+
+## Active Learning Exercise: Seattle Police Calls Data Viz
+```{r, message = T, echo = T}
 seattle <- read_csv('./SeattlePolice.csv')
-points(seattle$Longitude, seattle$Latitude)
 ```
 
+# Cartography
 
+## Distance Calculations
+
+A collaborator suggests that there may a spatial relationship between the police calls in the Seattle Data Set. How would you calculate the distance between those points?
 
 ## Additional References
 - [Google API for ggmap](https://www.r-bloggers.com/geocoding-with-ggmap-and-the-google-api/)
